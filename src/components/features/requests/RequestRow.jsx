@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Building2 } from 'lucide-react'
 import StatusBadge from '@/components/features/requests/StatusBadge'
 import { cn } from '@/lib/utils'
@@ -11,7 +12,10 @@ const RAIL_TONE = {
 
 export default function RequestRow({ request }) {
   return (
-    <div className="group relative flex flex-col gap-3 overflow-hidden rounded-card border border-border bg-surface pl-4 pr-4 py-4 transition-shadow hover:shadow-sm sm:flex-row sm:items-center sm:justify-between sm:pl-5">
+    <Link
+      to={`/requests/${request.id}`}
+      className="group relative flex flex-col gap-3 overflow-hidden rounded-card border border-border bg-surface pl-4 pr-4 py-4 transition-shadow hover:shadow-sm sm:flex-row sm:items-center sm:justify-between sm:pl-5"
+    >
       <span
         className={cn('absolute inset-y-0 left-0 w-1', RAIL_TONE[request.status])}
         aria-hidden="true"
@@ -33,6 +37,6 @@ export default function RequestRow({ request }) {
         <StatusBadge status={request.status} />
         <p className="text-xs text-ink-faint">Updated {request.updated}</p>
       </div>
-    </div>
+    </Link>
   )
 }

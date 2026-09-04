@@ -30,6 +30,8 @@
   --color-info: #3B6FA0;
   --color-info-tint: #E9F1F8;
 
+  --color-gold-ink: #8A6A21;
+
   --font-display: 'Fraunces', ui-serif, Georgia, serif;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
@@ -37,11 +39,76 @@
   --radius-card: 0.875rem;
 }
 
+/* Dark palette — same roles, applied when the system prefers dark and the
+   user hasn't explicitly chosen light, or when the user explicitly chose dark. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-paper: #0D1420;
+    --color-surface: #141C2C;
+    --color-ink: #E8EAF1;
+    --color-ink-muted: #9AA4BA;
+    --color-ink-faint: #6F7A93;
+    --color-border: #253048;
+    --color-border-strong: #37425F;
+
+    --color-navy: #6E97D1;
+    --color-navy-dark: #5A7FB8;
+    --color-navy-tint: #1D2A44;
+
+    --color-gold: #D8AE55;
+    --color-gold-tint: #2E2410;
+    --color-gold-ink: #E8C878;
+
+    --color-success: #4CAF7D;
+    --color-success-tint: #16281F;
+
+    --color-warning: #D99A3B;
+    --color-warning-tint: #2E2210;
+
+    --color-danger: #E0685F;
+    --color-danger-tint: #2E1918;
+
+    --color-info: #6FA0D9;
+    --color-info-tint: #182A3D;
+  }
+}
+
+:root[data-theme='dark'] {
+  --color-paper: #0D1420;
+  --color-surface: #141C2C;
+  --color-ink: #E8EAF1;
+  --color-ink-muted: #9AA4BA;
+  --color-ink-faint: #6F7A93;
+  --color-border: #253048;
+  --color-border-strong: #37425F;
+
+  --color-navy: #6E97D1;
+  --color-navy-dark: #5A7FB8;
+  --color-navy-tint: #1D2A44;
+
+  --color-gold: #D8AE55;
+  --color-gold-tint: #2E2410;
+  --color-gold-ink: #E8C878;
+
+  --color-success: #4CAF7D;
+  --color-success-tint: #16281F;
+
+  --color-warning: #D99A3B;
+  --color-warning-tint: #2E2210;
+
+  --color-danger: #E0685F;
+  --color-danger-tint: #2E1918;
+
+  --color-info: #6FA0D9;
+  --color-info-tint: #182A3D;
+}
+
 body {
   background-color: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 @layer utilities {

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { LogIn } from 'lucide-react'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
@@ -67,9 +67,9 @@ export default function LoginFormSection() {
             <input type="checkbox" className="h-4 w-4 rounded border-border-strong text-navy focus-ring" />
             Remember me
           </label>
-          <a href="#" className="font-medium text-navy hover:underline">
+          <Link to="/forgot-password" className="font-medium text-navy hover:underline">
             Forgot password?
-          </a>
+          </Link>
         </div>
         <Button type="submit" icon={LogIn} className="w-full" disabled={submitting}>
           {submitting ? 'Signing in…' : 'Sign in'}
@@ -78,9 +78,9 @@ export default function LoginFormSection() {
 
       <p className="mt-6 text-center text-sm text-ink-muted">
         New student?{' '}
-        <a href="#" className="font-medium text-navy hover:underline">
+        <Link to="/register" className="font-medium text-navy hover:underline">
           Activate your account
-        </a>
+        </Link>
       </p>
     </div>
   )

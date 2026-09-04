@@ -6,3 +6,9 @@ export function unwrapCollection(payload) {
   if (payload && Array.isArray(payload.data)) return payload.data
   return []
 }
+
+// Same idea, but for a single Eloquent model / API Resource response.
+export function unwrapItem(payload) {
+  if (payload && payload.data && !Array.isArray(payload.data)) return payload.data
+  return payload
+}
