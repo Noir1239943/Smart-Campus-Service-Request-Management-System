@@ -1,0 +1,93 @@
+import { useState } from 'react'
+import { Card, CardHeader, CardTitle, CardBody } from '@/components/ui/Card'
+import { cn } from '@/lib/utils'
+import { api } from '@/lib/api'
+import { useAuth } from '@/context/AuthContext'
+import type { UserPreferences } from '@/types'
+
+interface ToggleConfig {
+  key: keyof UserPreferences
+  field: string
+  label: string
+  hint: string
+}
+
+const TOGGLES: ToggleConfig[] = [
+  { key: 'email', field: 'notify_email', label: 'Email notifications', hint: 'Get an email when a request status changes.' },
+  { key: 'sms', field: 'notify_sms', label: 'SMS alerts', hint: 'Text alerts for urgent updates only.' },
+  { key: 'digest', field: 'notify_weekly_digest', label: 'Weekly digest', hint: 'A Monday summary of all open requests.' },
+]
+
+interface ToggleProps {
+  checked: boolean
+  onChange: () => void
+  disabled?: boolean
+}
+
+function Toggle({ checked, onChange, disabled }: ToggleProps) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      onClick={onChange}
+      disabled={disabled}
+      className={cn(
+        'focus-ring relative h-6 w-11 shrink-0 rounded-full border-0 p-0 transition-colors disabled:opacity-50',
+        checked ? 'bg-navy' : 'bg-border-strong'
+      )}
+    >
+      <span
+        className={cn(
+          'absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform',
+          checked ? 'translate-x-5' : 'translate-x-0'
+        )}
+      />
+    </button>
+  )
+}
+
+const DEFAULT_PREFS: UserPreferences = { email: true, sms: false, digest: true }
+
+export default function ProfilePreferencesSection() {
+  const { user, updateUser } = useAuth()
+  const [pending, setPending] = useState<keyof UserPreferences | null>(null)
+
+  if (!user) return null
+
+  const prefs = user.preferences ?? DEFAULT_PREFS
+
+  async function handleToggle(key: keyof UserPreferences, field: string) {
+    const next = !prefs[key]
+    setPending(key)
+    // optimistic update
+    updateUser({ preferences: { ...prefs, [key]: next } })
+    try {
+      await api.patch('/profile', { [field]: next })
+    } catch {
+      // revert on failure
+      updateUser({ preferences: { ...prefs, [key]: !next } })
+    } finally {
+      setPending(null)
+    }
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Notification preferences</CardTitle>
+      </CardHeader>
+      <CardBody className="divide-y divide-border">
+        {TOGGLES.map(({ key, field, label, hint }) => (
+          <div key={key} className="flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0">
+            <div>
+              <p className="text-sm font-medium text-ink">{label}</p>
+              <p className="mt-0.5 text-xs text-ink-muted">{hint}</p>
+            </div>
+            <Toggle checked={prefs[key]} onChange={() => handleToggle(key, field)} disabled={pending === key} />
+          </div>
+        ))}
+      </CardBody>
+    </Card>
+  )
+}

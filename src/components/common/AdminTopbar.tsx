@@ -1,0 +1,42 @@
+import { Menu } from 'lucide-react'
+import Avatar from '@/components/ui/Avatar'
+import Badge from '@/components/ui/Badge'
+import { useAuth } from '@/context/AuthContext'
+import type { BadgeTone, UserRole } from '@/types'
+
+const ROLE_BADGE_TONE: Partial<Record<UserRole, BadgeTone>> = { admin: 'navy', staff: 'neutral' }
+const ROLE_LABEL: Partial<Record<UserRole, string>> = { admin: 'Admin', staff: 'Staff' }
+
+interface AdminTopbarProps {
+  onMenuClick?: () => void
+}
+
+export default function AdminTopbar({ onMenuClick }: AdminTopbarProps) {
+  // Guaranteed authenticated — this layout only renders under RequireAuth + RequireRole.
+  const { user } = useAuth()
+  const currentUser = user!
+
+  return (
+    <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-3 border-b border-border bg-surface px-4 sm:px-6">
+      <button
+        onClick={onMenuClick}
+        aria-label="Open menu"
+        className="focus-ring rounded-md p-1.5 text-ink-muted lg:hidden"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
+
+      <p className="font-display text-sm font-semibold text-ink">Admin</p>
+
+      <div className="ml-auto flex items-center gap-3">
+        <Badge tone={ROLE_BADGE_TONE[currentUser.role] ?? 'neutral'}>
+          {ROLE_LABEL[currentUser.role] ?? currentUser.role}
+        </Badge>
+        <div className="flex items-center gap-2">
+          <Avatar name={currentUser.name} />
+          <span className="hidden text-sm font-medium text-ink md:inline">{currentUser.name}</span>
+        </div>
+      </div>
+    </header>
+  )
+}
