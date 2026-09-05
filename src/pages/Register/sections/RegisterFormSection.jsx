@@ -52,21 +52,21 @@ export default function RegisterFormSection() {
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-        <Input id="name" name="name" label="Full name" placeholder="Juan Dela Cruz" required />
+        <Input id="name" name="name" label="Full name" placeholder="Name" required />
         {fieldErrors.name && <p className="-mt-3 text-xs text-danger">{fieldErrors.name[0]}</p>}
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <Input id="student-id" label="Student ID" placeholder="e.g. 2023-04521" required />
+            <Input id="student-id" label="Student ID" placeholder="ID Number" required />
             {fieldErrors.student_id && <p className="mt-1.5 text-xs text-danger">{fieldErrors.student_id[0]}</p>}
           </div>
           <div>
-            <Input id="program" name="program" label="Program" placeholder="e.g. BS Computer Science" required />
+            <Input id="program" name="program" label="Program" placeholder="BS " required />
             {fieldErrors.program && <p className="mt-1.5 text-xs text-danger">{fieldErrors.program[0]}</p>}
           </div>
         </div>
 
-        <Input id="email" name="email" type="email" label="Email address" placeholder="you@school.edu" required />
+        <Input id="email" name="email" type="email" label="Email address" placeholder="Username" required />
         {fieldErrors.email && <p className="-mt-3 text-xs text-danger">{fieldErrors.email[0]}</p>}
 
         <div className="grid gap-4 sm:grid-cols-2">

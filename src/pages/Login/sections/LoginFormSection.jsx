@@ -11,7 +11,7 @@ export default function LoginFormSection() {
   const location = useLocation()
   const { login } = useAuth()
 
-  const [studentId, setStudentId] = useState('')
+  const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
   const [submitting, setSubmitting] = useState(false)
@@ -21,7 +21,8 @@ export default function LoginFormSection() {
     setError(null)
     setSubmitting(true)
     try {
-      await login({ studentId, password })
+      const isEmail = identifier.includes('@')
+      await login(isEmail ? { email: identifier, password } : { studentId: identifier, password })
       navigate(location.state?.from?.pathname ?? '/', { replace: true })
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Unable to sign in. Please try again.')
@@ -34,16 +35,16 @@ export default function LoginFormSection() {
     <div>
       <h1 className="font-display text-2xl font-semibold text-ink">Welcome back</h1>
       <p className="mt-1.5 text-sm text-ink-muted">
-        Sign in with your student ID to submit and track requests.
+        Sign in with your student ID or email to submit and track requests.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
         <Input
-          id="student-id"
-          label="Student ID"
-          placeholder="e.g. 2023-04521"
-          value={studentId}
-          onChange={(e) => setStudentId(e.target.value)}
+          id="identifier"
+          label="Student ID or Email"
+          placeholder="ID or Email"
+          value={identifier}
+          onChange={(e) => setIdentifier(e.target.value)}
           required
         />
         <Input
@@ -79,7 +80,7 @@ export default function LoginFormSection() {
       <p className="mt-6 text-center text-sm text-ink-muted">
         New student?{' '}
         <Link to="/register" className="font-medium text-navy hover:underline">
-          Activate your account
+          Create an account
         </Link>
       </p>
     </div>

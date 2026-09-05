@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react'
-import { REQUEST_STATUS } from '@/data/mockRequests'
+import { REQUEST_STATUS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
 const FILTERS = [{ key: 'all', label: 'All' }, ...Object.entries(REQUEST_STATUS).map(([key, v]) => ({ key, label: v.label }))]

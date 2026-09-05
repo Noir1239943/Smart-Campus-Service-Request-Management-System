@@ -39,8 +39,7 @@ export function AuthProvider({ children }) {
   async function register(fields) {
     const data = await api.post('/register', fields)
     setToken(data.token)
-    setUser(data.user)
-    return data.user
+    await loadUser()
   }
 
   async function logout() {

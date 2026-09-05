@@ -8,7 +8,6 @@ import RoleHome from '@/routes/RoleHome'
 import LoginPage from '@/pages/Login/LoginPage'
 import RegisterPage from '@/pages/Register/RegisterPage'
 import ForgotPasswordPage from '@/pages/ForgotPassword/ForgotPasswordPage'
-import ResetPasswordPage from '@/pages/ResetPassword/ResetPasswordPage'
 import RequestsPage from '@/pages/Requests/RequestsPage'
 import NewRequestPage from '@/pages/NewRequest/NewRequestPage'
 import RequestDetailsPage from '@/pages/RequestDetails/RequestDetailsPage'
@@ -28,7 +27,6 @@ export default function AppRoutes() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
       </Route>
 
       <Route element={<RequireAuth />}>

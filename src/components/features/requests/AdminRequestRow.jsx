@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Building2, User } from 'lucide-react'
 import Select from '@/components/ui/Select'
-import { REQUEST_STATUS } from '@/data/mockRequests'
+import { REQUEST_STATUS } from '@/lib/constants'
 import { api, ApiError } from '@/lib/api'
 
 function numericId(displayId) {

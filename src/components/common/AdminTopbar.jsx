@@ -10,7 +10,7 @@ export default function AdminTopbar({ onMenuClick }) {
   const { user } = useAuth()
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-3 border-b border-border bg-surface/90 px-4 backdrop-blur sm:px-6">
+    <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-3 border-b border-border bg-surface px-4 sm:px-6">
       <button
         onClick={onMenuClick}
         aria-label="Open menu"

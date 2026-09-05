@@ -1,25 +1,36 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Send, ArrowLeft } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { KeyRound, ArrowLeft } from 'lucide-react'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import { api, ApiError } from '@/lib/api'
 
 export default function ForgotPasswordFormSection() {
-  const [email, setEmail] = useState('')
+  const navigate = useNavigate()
+  const [identifier, setIdentifier] = useState('')
   const [error, setError] = useState(null)
-  const [sent, setSent] = useState(false)
+  const [done, setDone] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
   async function handleSubmit(event) {
     event.preventDefault()
     setError(null)
     setSubmitting(true)
+
+    const form = event.target
+    const isEmail = identifier.includes('@')
+    const payload = {
+      ...(isEmail ? { email: identifier } : { student_id: identifier }),
+      password: form.elements.password.value,
+      password_confirmation: form.elements['password-confirmation'].value,
+    }
+
     try {
-      await api.post('/forgot-password', { email })
-      setSent(true)
+      await api.post('/reset-password', payload)
+      setDone(true)
+      setTimeout(() => navigate('/login', { replace: true }), 1500)
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Unable to send the reset link. Please try again.')
+      setError(err instanceof ApiError ? err.message : 'Unable to reset your password. Please try again.')
     } finally {
       setSubmitting(false)
     }
@@ -32,24 +43,31 @@ export default function ForgotPasswordFormSection() {
         Back to sign in
       </Link>
 
-      <h1 className="mt-5 font-display text-2xl font-semibold text-ink">Forgot your password?</h1>
+      <h1 className="mt-5 font-display text-2xl font-semibold text-ink">Reset your password</h1>
       <p className="mt-1.5 text-sm text-ink-muted">
-        Enter the email on your account and we'll send you a link to reset it.
+        Enter your Student ID or email, then choose a new password.
       </p>
 
-      {sent ? (
+      {done ? (
         <p role="status" className="mt-8 rounded-lg bg-success-tint px-4 py-3 text-sm text-success">
-          If an account matches that email, a reset link is on its way. Check your inbox.
+          Password reset. Redirecting you to sign in…
         </p>
       ) : (
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
           <Input
-            id="email"
-            type="email"
-            label="Email address"
-            placeholder="you@school.edu"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            id="identifier"
+            label="Student ID or Email"
+            placeholder="ID or Email"
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
+            required
+          />
+          <Input id="password" type="password" label="New password" placeholder="••••••••" required />
+          <Input
+            id="password-confirmation"
+            type="password"
+            label="Confirm new password"
+            placeholder="••••••••"
             required
           />
 
@@ -59,8 +77,8 @@ export default function ForgotPasswordFormSection() {
             </p>
           )}
 
-          <Button type="submit" icon={Send} className="w-full" disabled={submitting}>
-            {submitting ? 'Sending…' : 'Send reset link'}
+          <Button type="submit" icon={KeyRound} className="w-full" disabled={submitting}>
+            {submitting ? 'Resetting…' : 'Reset password'}
           </Button>
         </form>
       )}

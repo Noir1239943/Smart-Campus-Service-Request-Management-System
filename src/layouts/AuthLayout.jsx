@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import Logo from '@/components/common/Logo'
+import cpcLogo from '@/assets/cpc-logo.png'
 
 export default function AuthLayout() {
   return (
@@ -21,8 +22,9 @@ export default function AuthLayout() {
             backgroundSize: '28px 28px',
           }}
         />
-        <div className="relative flex h-full flex-col justify-end p-12">
-          <p className="font-display text-3xl font-semibold leading-tight text-white">
+        <div className="relative flex h-full flex-col items-center justify-center p-12 text-center">
+          <img src={cpcLogo} alt="Cordova Public College" className="h-48 w-48 drop-shadow-lg" />
+          <p className="mt-8 max-w-md font-display text-3xl font-semibold leading-tight text-white">
             One place for every request, from submission to sign-off.
           </p>
           <p className="mt-4 max-w-md text-sm text-white/70">
