@@ -9,6 +9,7 @@ import LoginPage from '@/pages/Login/LoginPage'
 import RegisterPage from '@/pages/Register/RegisterPage'
 import ForgotPasswordPage from '@/pages/ForgotPassword/ForgotPasswordPage'
 import ResetPasswordPage from '@/pages/ResetPassword/ResetPasswordPage'
+import VerifyEmailPage from '@/pages/VerifyEmail/VerifyEmailPage'
 import RequestsPage from '@/pages/Requests/RequestsPage'
 import NewRequestPage from '@/pages/NewRequest/NewRequestPage'
 import RequestDetailsPage from '@/pages/RequestDetails/RequestDetailsPage'
@@ -29,6 +30,7 @@ export default function AppRoutes() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
       </Route>
 
       <Route element={<RequireAuth />}>

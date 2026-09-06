@@ -12,6 +12,7 @@ export interface User {
   role: UserRole
   student_id: string
   email: string
+  email_verified: boolean
   program?: string
   year_level?: string
   contact_number?: string

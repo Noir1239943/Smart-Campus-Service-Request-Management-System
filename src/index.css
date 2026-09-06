@@ -120,3 +120,65 @@ body {
     outline-offset: 2px;
   }
 }
+
+/* Custom-styleable native <select> (Chromium 133+): animate the dropdown
+   panel in/out and soften the option highlight. Browsers without support
+   for `appearance: base-select` simply keep the default native popup. */
+@layer base {
+  select.app-select {
+    appearance: base-select;
+  }
+
+  select.app-select::picker-icon {
+    display: none;
+  }
+
+  select.app-select::picker(select) {
+    appearance: base-select;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 0.625rem;
+    background-color: var(--color-surface);
+    box-shadow: 0 12px 32px -12px rgba(22, 35, 61, 0.28);
+    padding: 0.25rem;
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+    transition:
+      opacity 0.16s ease,
+      transform 0.16s ease,
+      overlay 0.16s ease allow-discrete,
+      display 0.16s ease allow-discrete;
+  }
+
+  select.app-select:open::picker(select) {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  @starting-style {
+    select.app-select:open::picker(select) {
+      opacity: 0;
+      transform: translateY(-4px) scale(0.98);
+    }
+  }
+
+  select.app-select option {
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    color: var(--color-ink);
+  }
+
+  select.app-select option:hover,
+  select.app-select option:focus {
+    background-color: var(--color-navy-tint);
+    color: var(--color-ink);
+  }
+
+  select.app-select option:checked {
+    background-color: var(--color-navy-tint);
+    color: var(--color-navy);
+  }
+
+  select.app-select:open ~ .app-select-icon {
+    rotate: 180deg;
+  }
+}

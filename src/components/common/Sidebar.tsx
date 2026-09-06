@@ -70,7 +70,7 @@ export default function Sidebar({ open = false, onClose }: SidebarProps) {
                 )
               }
             >
-              <Icon className="h-[18px] w-[18px]" />
+              <Icon className="h-4.5 w-4.5" />
               {label}
             </NavLink>
           ))}
@@ -85,7 +85,7 @@ export default function Sidebar({ open = false, onClose }: SidebarProps) {
             onClick={handleLogout}
             className="focus-ring flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-muted transition-colors hover:bg-paper hover:text-danger"
           >
-            <LogOut className="h-[18px] w-[18px]" />
+            <LogOut className="h-4.5 w-4.5" />
             Sign out
           </button>
         </div>

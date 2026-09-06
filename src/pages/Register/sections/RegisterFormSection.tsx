@@ -67,7 +67,15 @@ export default function RegisterFormSection() {
           </div>
         </div>
 
-        <Input id="email" name="email" type="email" label="Email address" placeholder="Username" required />
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          label="Email address"
+          placeholder="Username"
+          hint="Use an email you can access — you'll need it to verify your account and reset your password."
+          required
+        />
         {fieldErrors.email && <p className="-mt-3 text-xs text-danger">{fieldErrors.email[0]}</p>}
 
         <div className="grid gap-4 sm:grid-cols-2">
